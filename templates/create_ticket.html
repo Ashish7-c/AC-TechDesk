@@ -1,0 +1,153 @@
+
+{% extends "base.html" %}
+
+{% block title %}Create Ticket | AC-TechDesk{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">SUPPORT / NEW REQUEST</p>
+        <h2>Create Support Ticket</h2>
+        <p>Submit an IT problem to the service desk.</p>
+    </div>
+</div>
+
+<section class="panel form-panel">
+
+    <form method="POST"
+          action="{{ url_for('create_ticket') }}">
+
+        <!-- CSRF PROTECTION -->
+        <input type="hidden"
+               name="csrf_token"
+               value="{{ csrf_token() }}">
+
+        <div class="form-grid">
+
+            <div class="form-field">
+                <label for="employee">Employee Name</label>
+
+                <input
+                    type="text"
+                    id="employee"
+                    name="employee"
+                    maxlength="100"
+                    placeholder="Example: John Smith"
+                    required
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="email">Email Address</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    maxlength="150"
+                    placeholder="john@example.com"
+                    required
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="department">Department</label>
+
+                <select id="department" name="department" required>
+
+                    <option value="">Select Department</option>
+
+                    {% for department in departments %}
+
+                        <option value="{{ department }}">
+                            {{ department }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="category">Issue Category</label>
+
+                <select id="category" name="category" required>
+
+                    <option value="">Select Category</option>
+
+                    {% for category in categories %}
+
+                        <option value="{{ category }}">
+                            {{ category }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="form-field full-width">
+                <label for="subject">Issue Title</label>
+
+                <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    maxlength="150"
+                    placeholder="Example: Cannot connect to Wi-Fi"
+                    required
+                >
+            </div>
+
+            <div class="form-field full-width">
+                <label for="description">Problem Description</label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    maxlength="3000"
+                    rows="6"
+                    placeholder="Describe the issue and any error messages..."
+                    required
+                ></textarea>
+            </div>
+
+            <div class="form-field">
+                <label for="priority">Priority</label>
+
+                <select id="priority" name="priority" required>
+
+                    <option value="">Select Priority</option>
+
+                    {% for priority in priorities %}
+
+                        <option value="{{ priority }}">
+                            {{ priority }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+
+            <a href="{{ url_for('home') }}"
+               class="button secondary">
+                Cancel
+            </a>
+
+            <button type="submit" class="button primary">
+                Submit Support Ticket
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}

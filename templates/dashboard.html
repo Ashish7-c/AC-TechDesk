@@ -1,0 +1,243 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | AC-TechDesk{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADING -->
+
+<div class="page-heading">
+
+    <div>
+        <p class="eyebrow">WORKSPACE / OVERVIEW</p>
+
+        <h2>Service Desk Dashboard</h2>
+
+        <p>Monitor and manage IT support requests.</p>
+    </div>
+
+    <a href="{{ url_for('create_ticket') }}"
+       class="button primary">
+        + Create Ticket
+    </a>
+
+</div>
+
+
+<!-- DASHBOARD STATISTICS -->
+
+<div class="stats-grid">
+
+    <!-- TOTAL TICKETS -->
+
+    <div class="stat-card total-card">
+        <h3>Total Tickets</h3>
+        <h2>{{ total }}</h2>
+        <p>All reported incidents</p>
+    </div>
+
+    <!-- OPEN TICKETS -->
+
+    <div class="stat-card open-card">
+        <h3>Open Tickets</h3>
+        <h2>{{ open_count }}</h2>
+        <p>Awaiting support</p>
+    </div>
+
+    <!-- IN PROGRESS -->
+
+    <div class="stat-card progress-card">
+        <h3>In Progress</h3>
+        <h2>{{ progress_count }}</h2>
+        <p>Being investigated</p>
+    </div>
+
+    <!-- RESOLVED / CLOSED -->
+
+    <div class="stat-card resolved-card">
+        <h3>Resolved / Closed</h3>
+        <h2>{{ resolved_count }}</h2>
+        <p>Completed support requests</p>
+    </div>
+
+</div>
+
+
+<!-- TICKET MANAGEMENT -->
+
+<section class="panel">
+
+    <div class="panel-heading">
+
+        <h3>Support Tickets</h3>
+
+        <p>
+            Search, filter, and manage reported IT issues.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH AND FILTER FORM -->
+
+    <form method="GET"
+          action="{{ url_for('home') }}"
+          class="filter-form">
+
+        <input
+            type="search"
+            name="search"
+            placeholder="Search employee or issue..."
+            value="{{ search }}"
+        >
+
+        <select name="status">
+
+            <option value="">All Statuses</option>
+
+            {% for status in statuses %}
+
+                <option value="{{ status }}"
+                    {% if status_filter == status %}
+                        selected
+                    {% endif %}>
+                    {{ status }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button type="submit" class="button primary">
+            Search
+        </button>
+
+        <a href="{{ url_for('home') }}"
+           class="button secondary">
+            Clear
+        </a>
+
+    </form>
+
+
+    <!-- TICKET TABLE -->
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Employee</th>
+                    <th>Issue</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Assigned To</th>
+                    <th>Created</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for ticket in tickets %}
+
+                <tr>
+
+                    <!-- TICKET ID -->
+
+                    <td>
+                        #{{ ticket.id }}
+                    </td>
+
+                    <!-- EMPLOYEE -->
+
+                    <td>
+                        {{ ticket.employee }}
+                    </td>
+
+                    <!-- ISSUE -->
+
+                    <td>
+                        {{ ticket.subject }}
+                    </td>
+
+                    <!-- CATEGORY -->
+
+                    <td>
+                        {{ ticket.category }}
+                    </td>
+
+                    <!-- PRIORITY -->
+
+                    <td>
+
+                        <span class="priority {{ ticket.priority|lower }}">
+                            {{ ticket.priority }}
+                        </span>
+
+                    </td>
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span class="status {{ ticket.status|lower|replace(' ', '-') }}">
+                            {{ ticket.status }}
+                        </span>
+
+                    </td>
+
+                    <!-- ASSIGNED TECHNICIAN -->
+
+                    <td>
+                        {{ ticket.assigned_to }}
+                    </td>
+
+                    <!-- CREATION DATE -->
+
+                    <td>
+                        {{ ticket.created_at }}
+                    </td>
+
+                    <!-- VIEW TICKET -->
+
+                    <td>
+
+                        <a class="view-link"
+                           href="{{ url_for('ticket_detail', ticket_id=ticket.id) }}">
+                            View
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <!-- NO TICKETS FOUND -->
+
+                <tr>
+
+                    <td colspan="9" class="empty-state">
+                        No tickets found. Create your first support ticket!
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}

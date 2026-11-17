@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+
+{% block title %}Knowledge Base | AC TechDesk{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">SUPPORT / DOCUMENTATION</p>
+        <h2>IT Knowledge Base</h2>
+        <p>Technical troubleshooting guides and solutions.</p>
+    </div>
+</div>
+
+{% for article in articles %}
+
+<section class="panel article-card">
+
+    <span class="article-category">
+        {{ article.category }}
+    </span>
+
+    <h3>{{ article.title }}</h3>
+
+    <ol>
+        {% for step in article.steps %}
+            <li>{{ step }}</li>
+        {% endfor %}
+    </ol>
+
+</section>
+
+{% endfor %}
+
+{% endblock %}

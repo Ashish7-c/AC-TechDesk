@@ -1,0 +1,239 @@
+
+{% extends "base.html" %}
+
+{% block title %}Reports & Analytics | AC-TechDesk{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADING -->
+
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">ADMIN / REPORTS</p>
+        <h2>Reports & Analytics</h2>
+        <p>
+            Monitor IT support performance,
+            ticket trends, and technician workloads.
+        </p>
+    </div>
+
+    <a href="{{ url_for('home') }}"
+       class="button secondary">
+        Back to Dashboard
+    </a>
+</div>
+
+
+<!-- OVERALL STATISTICS -->
+
+<section class="panel">
+
+    <h3>Ticket Overview</h3>
+
+    <div class="details-grid">
+
+        <div>
+            <label>Total Tickets</label>
+            <h2>{{ stats['total'] }}</h2>
+        </div>
+
+        <div>
+            <label>Open Tickets</label>
+            <h2>{{ stats['open_count'] }}</h2>
+        </div>
+
+        <div>
+            <label>In Progress</label>
+            <h2>{{ stats['progress_count'] }}</h2>
+        </div>
+
+        <div>
+            <label>Resolved</label>
+            <h2>{{ stats['resolved_count'] }}</h2>
+        </div>
+
+        <div>
+            <label>Closed</label>
+            <h2>{{ stats['closed_count'] }}</h2>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STATUS ANALYTICS -->
+
+<section class="panel">
+
+    <h3>Tickets by Status</h3>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Tickets</th>
+                    <th>Distribution</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for row in status_report %}
+                <tr>
+                    <td>{{ row['status'] }}</td>
+                    <td>{{ row['ticket_count'] }}</td>
+                    <td>
+                        <progress
+                            class="report-bar"
+                            value="{{ row['ticket_count'] }}"
+                            max="{{ stats['total'] if stats['total'] > 0 else 1 }}"
+                            aria-label="{{ row['status'] }} ticket distribution"
+                        ></progress>
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="3">
+                        No tickets to report.
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+
+<!-- PRIORITY ANALYTICS -->
+
+<section class="panel">
+
+    <h3>Tickets by Priority</h3>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Priority</th>
+                    <th>Tickets</th>
+                    <th>Distribution</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for row in priority_report %}
+                <tr>
+                    <td>
+                        <span class="priority {{ row['priority']|lower }}">
+                            {{ row['priority'] }}
+                        </span>
+                    </td>
+                    <td>{{ row['ticket_count'] }}</td>
+                    <td>
+                        <progress
+                            class="report-bar"
+                            value="{{ row['ticket_count'] }}"
+                            max="{{ stats['total'] if stats['total'] > 0 else 1 }}"
+                            aria-label="{{ row['priority'] }} priority distribution"
+                        ></progress>
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="3">
+                        No priority data available.
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+
+<!-- CATEGORY ANALYTICS -->
+
+<section class="panel">
+
+    <h3>Tickets by Category</h3>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Tickets</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for row in category_report %}
+                <tr>
+                    <td>{{ row['category'] }}</td>
+                    <td>{{ row['ticket_count'] }}</td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="2">
+                        No category data available.
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+
+<!-- TECHNICIAN WORKLOAD -->
+
+<section class="panel">
+
+    <h3>Technician Workload</h3>
+
+    <p>
+        Number of tickets currently assigned
+        to each technician, including historical tickets.
+    </p>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Assigned To</th>
+                    <th>Total Tickets</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for row in technician_report %}
+                <tr>
+                    <td>{{ row['technician'] }}</td>
+                    <td>{{ row['ticket_count'] }}</td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="2">
+                        No technician data available.
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+{% endblock %}

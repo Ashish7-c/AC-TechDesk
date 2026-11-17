@@ -1,0 +1,77 @@
+
+{% extends "base.html" %}
+
+{% block title %}Login | AC-TechDesk{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">ACCOUNT / ACCESS</p>
+        <h2>Sign in to AC-TechDesk</h2>
+        <p>Enter your credentials to access the IT Help Desk.</p>
+    </div>
+</div>
+
+<section class="panel form-panel">
+
+    <h3>Account Login</h3>
+
+    <p class="form-help">
+        Sign in using your registered email and password.
+    </p>
+
+    <form method="POST"
+          action="{{ url_for('login') }}">
+
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ csrf_token() }}"
+        >
+
+        <div class="form-field">
+
+            <label for="email">Email Address</label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                autocomplete="username"
+                required
+            >
+
+        </div>
+
+        <div class="form-field">
+
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+        </div>
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="button primary">
+                Sign In
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}
