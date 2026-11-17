@@ -1,0 +1,46 @@
+
+name: AC-TechDesk Tests
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Check Python code
+        run: |
+          python -m py_compile app.py create_admin.py
+
+      - name: Check Flask application
+        env:
+          SECRET_KEY: test-only-secret-key
+        run: |
+          python - <<'PY'
+          from app import app, initialize_database
+
+          initialize_database()
+          client = app.test_client()
+
+          assert client.get("/login").status_code == 200
+          assert client.get("/").status_code == 302
+          assert client.get("/admin/reports").status_code == 302
+
+          print("Basic AC-TechDesk tests passed!")
+          PY
