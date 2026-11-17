@@ -1,36 +1,50 @@
 
 {% extends "base.html" %}
 
-{% block title %}Knowledge Base | AC TechDesk{% endblock %}
+{% block title %}Knowledge Base | AC-TechDesk{% endblock %}
 
 {% block content %}
 
 <div class="page-heading">
+
     <div>
         <p class="eyebrow">SUPPORT / DOCUMENTATION</p>
+
         <h2>IT Knowledge Base</h2>
-        <p>Technical troubleshooting guides and solutions.</p>
+
+        <p>Technical troubleshooting guides for common IT problems.</p>
     </div>
+
 </div>
 
-{% for article in articles %}
+<div class="article-grid">
 
-<section class="panel article-card">
+    {% for article in articles %}
 
-    <span class="article-category">
-        {{ article.category }}
-    </span>
+        <article class="panel article-card">
 
-    <h3>{{ article.title }}</h3>
+            <span class="article-category">
+                {{ article.category }}
+            </span>
 
-    <ol>
-        {% for step in article.steps %}
-            <li>{{ step }}</li>
-        {% endfor %}
-    </ol>
+            <h3>{{ article.title }}</h3>
 
-</section>
+            <h4>Recommended Troubleshooting Steps</h4>
 
-{% endfor %}
+            <ol>
+
+                {% for step in article.steps %}
+
+                    <li>{{ step }}</li>
+
+                {% endfor %}
+
+            </ol>
+
+        </article>
+
+    {% endfor %}
+
+</div>
 
 {% endblock %}
