@@ -1,76 +1,128 @@
 
-# AC-TechDesk — IT Help Desk Management System
+# AC-TechDesk - IT Help Desk Management System
 
-AC-TechDesk is a full-stack IT support ticket management
-application developed using Python, Flask, SQLite, HTML,
-and CSS.
+AC-TechDesk is a web-based IT Help Desk Management System built with Python, Flask, HTML, CSS, and SQLite.
 
-The application allows employees to submit IT support
-requests, administrators to assign tickets, and technicians
-to troubleshoot and resolve issues.
+The project simulates a company IT support environment where employees can report technical problems, technicians can troubleshoot issues, and administrators can manage support requests and user accounts.
 
-## 🌐 Live Application
+I developed this project to gain practical experience with IT support workflows, ticket management, user authentication, databases, and role-based access control.
 
-**Live Demo:** https://ac-techdesk.onrender.com
+## Live Application
 
-**Source Code:** https://github.com/Ashish7-c/AC-TechDesk
+**Live Website:** https://ac-techdesk.onrender.com
 
-**Deployment:** Render (Python, Flask, Gunicorn)
+**GitHub Repository:** https://github.com/Ashish7-c/AC-TechDesk
 
-> **Note:** This is a portfolio demonstration.
-> It uses temporary SQLite storage on Render Free.
-> Test accounts and tickets may reset after a service
-> restart or redeployment.
+**Hosting:** Render
 
-## Features
+**Cloud Database:** Turso (libSQL)
 
-### Support Ticket Management
-- Create IT support tickets
-- Assign ticket priorities
-- Categorize IT issues
+The live application includes a read-only Demo Viewer account with six fictional IT support tickets.
+
+## Project Features
+
+### IT Support Ticket Management
+
+- Create and submit IT support tickets
+- Record employee and department information
+- Categorize hardware, software, network, and other IT issues
+- Set ticket priority levels
 - Track ticket status
 - Assign tickets to registered technicians
-- Record troubleshooting and resolution notes
+- Add troubleshooting and resolution notes
 - View ticket activity history
-- Search and filter support requests
+- Search and filter support tickets
 
-### Authentication and Authorization
-- Secure password hashing
-- Login and logout
-- CSRF protection
+### User Authentication
+
+- Secure user login and logout
+- Password hashing
 - Role-based access control
-- Admin, Technician, and Employee roles
+- Account activation and deactivation
+- Protected application routes
+- CSRF protection
 
-### Admin Features
+### Administrator Features
+
+Administrators can:
+
 - View all support tickets
-- Create Technician and Employee accounts
-- Activate or deactivate user accounts
+- Create and manage user accounts
+- Activate or deactivate accounts
 - Assign tickets to technicians
-- View reports and analytics
+- Update ticket status and resolution notes
+- Access reports and analytics
 
 ### Technician Features
-- View assigned support tickets
+
+Technicians can:
+
+- View tickets assigned to them
+- Investigate technical problems
 - Update ticket status
-- Document troubleshooting steps
+- Record troubleshooting steps
+- Add resolution notes
+- Review ticket activity
 
 ### Employee Features
-- Submit support tickets
-- Track submitted requests
-- View ticket progress
 
-### Reports and Analytics
-- Total ticket statistics
-- Tickets by status
-- Tickets by priority
-- Tickets by category
-- Technician workload overview
+Employees can:
 
-### Knowledge Base
-- Common IT troubleshooting guides
-- Wi-Fi and networking support
+- Submit IT support requests
+- View their own submitted tickets
+- Track ticket progress
+- Review resolution notes
+
+### Demo Viewer Features
+
+AC-TechDesk includes a read-only Demo Viewer account for recruiters and portfolio visitors.
+
+Demo Viewers can:
+
+- Explore six fictional support tickets
+- View dashboard statistics
+- Search and filter tickets
+- Open their own sample ticket details
+- Read troubleshooting and resolution notes
+- Access the Knowledge Base
+
+Demo Viewers cannot:
+
+- Create new tickets
+- Edit ticket details
+- Change ticket status
+- Assign technicians
+- Manage users
+- Access administrative reports
+- View tickets belonging to other users
+
+These restrictions are enforced by the Flask backend, not just by hiding buttons.
+
+## Dashboard and Analytics
+
+The dashboard displays:
+
+- Total tickets
+- Open tickets
+- Tickets in progress
+- Resolved and closed tickets
+
+The administrator reports page also provides:
+
+- Ticket counts by status
+- Ticket counts by priority
+- Ticket counts by category
+- Technician workload information
+
+## Knowledge Base
+
+The Knowledge Base provides basic troubleshooting information for common IT problems, including:
+
+- Wi-Fi and network connectivity
 - Email troubleshooting
-- Printer troubleshooting
-- Windows login assistance
+- Printer issues
+- Windows login problems
+- General computer troubleshooting
 
 ## Technologies Used
 
@@ -78,33 +130,72 @@ to troubleshoot and resolve issues.
 |---|---|
 | Python | Backend programming |
 | Flask | Web application framework |
-| SQLite | Database |
-| HTML5 | Page structure |
-| CSS3 | Styling |
-| Jinja2 | Dynamic templates |
-| Flask-Login | User authentication |
+| HTML5 | Web page structure |
+| CSS3 | User interface styling |
+| Jinja2 | Dynamic HTML templates |
+| SQLite | Local development database |
+| Turso (libSQL) | Persistent cloud database |
+| Flask-Login | Authentication and user sessions |
 | Flask-WTF | CSRF protection |
-| Git | Version control |
+| Werkzeug | Password hashing |
+| Gunicorn | Production application server |
+| Render | Web application hosting |
+| Git and GitHub | Version control and source code management |
+
+## Application Architecture
+
+AC-TechDesk follows a Flask-based web application architecture.
+
+1. A user opens the application in a browser.
+2. Flask handles the request and checks authentication.
+3. Role-based permissions determine what the user can access.
+4. The application reads or updates information in the database.
+5. Flask renders the page using Jinja2 templates.
+
+The project uses two database environments:
+
+**Local Development**
+
+SQLite stores data in the local `ac_techdesk.db` file.
+
+**Live Deployment**
+
+Turso stores the application's data in the cloud. The Flask application connects to Turso through a custom HTTP database adapter.
+
+This allows the hosted application to keep its data across restarts and deployments.
+
+## User Roles and Permissions
+
+| Feature | Admin | Technician | Employee | Demo Viewer |
+|---|---|---|---|---|
+| View all tickets | Yes | No | No | No |
+| View assigned tickets | Yes | Yes | No | No |
+| View own submitted tickets | Yes | No | Yes | No |
+| View own sample tickets | Yes | No | No | Yes |
+| Create tickets | Yes | Yes | Yes | No |
+| Update ticket status | Yes | Yes | No | No |
+| Add resolution notes | Yes | Yes | No | No |
+| Assign technicians | Yes | No | No | No |
+| Manage users | Yes | No | No | No |
+| View admin reports | Yes | No | No | No |
+| Access Knowledge Base | Yes | Yes | Yes | Yes |
 
 ## Installation
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Ashish7-c/AC-TechDesk.git
 cd AC-TechDesk
 ```
 
-Replace YOUR-USERNAME with the actual GitHub username
-after the repository is created.
-
-### 2. Create a virtual environment
+### 2. Create a Virtual Environment
 
 ```bash
 python -m venv venv
 ```
 
-### 3. Activate the environment
+### 3. Activate the Virtual Environment
 
 For Windows PowerShell:
 
@@ -112,120 +203,142 @@ For Windows PowerShell:
 .\venv\Scripts\Activate.ps1
 ```
 
-### 4. Install dependencies
+### 4. Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-### 5. Initialize the database
+### 5. Initialize the Local Database
 
-Run the Flask application once:
+Run the Flask application:
 
 ```bash
 python app.py
 ```
 
-Stop the server with Ctrl+C.
+This initializes the local SQLite database if the required tables do not already exist.
 
-### 6. Create the administrator account
+Stop the server using `Ctrl + C`.
+
+### 6. Create an Administrator Account
 
 ```bash
 python create_admin.py
 ```
 
-Follow the script's instructions to create the Admin account.
+Follow the prompts to create an administrator account.
 
-
-### 7. Run Locally (Optional)
-
-Start the Flask development server:
+### 7. Start the Application
 
 ```bash
 python app.py
 ```
 
-Open http://127.0.0.1:5000 in your browser.
+Open the local address displayed in the terminal, commonly:
 
-For the publicly hosted application, visit:
+http://127.0.0.1:5000
+
+The hosted application is available at:
 
 https://ac-techdesk.onrender.com
 
+## Deployment
 
-## User Roles
+AC-TechDesk is deployed on Render using Flask and Gunicorn.
 
-| Feature | Admin | Technician | Employee |
-|---|---|---|---|
-| View all tickets | Yes | No | No |
-| View assigned tickets | Yes | Yes | No |
-| Submit tickets | Yes | Yes | Yes |
-| View own requests | Yes | No | Yes |
-| Update ticket status | Yes | Yes | No |
-| Assign technicians | Yes | No | No |
-| Manage users | Yes | No | No |
-| View analytics | Yes | No | No |
+The production application uses Turso instead of the local SQLite database.
 
-## Security
+The following environment variables are configured for deployment:
 
-The application includes:
+- `SECRET_KEY`
+- `TURSO_DATABASE_URL`
+- `TURSO_AUTH_TOKEN`
 
-- Password hashing
+Database credentials and other secrets should never be committed to GitHub.
+
+## Security Features
+
+AC-TechDesk includes:
+
+- Hashed user passwords
+- Authentication using Flask-Login
 - Role-based authorization
 - CSRF protection
-- Protected Flask routes
+- Server-side access checks
+- Restrictions on unauthorized ticket updates
 - Account activation and deactivation
+- Separation of local and cloud database configurations
 
-This project is currently intended for local development
-and portfolio demonstration.
+Demo Viewer accounts are restricted to read-only operations.
 
-Additional security review and production configuration
-are required before using real organizational data.
+Unauthorized access to administrative pages is blocked with HTTP 403 responses. Access to another user's ticket is blocked with an HTTP 404 response.
 
+The application is a portfolio demonstration and is not intended to store real organizational or sensitive employee information without additional security review.
+
+## Testing
+
+The following features were manually tested:
+
+- User login and logout
+- Dashboard visibility
+- Ticket creation restrictions
+- Admin page restrictions
+- Ticket details and read-only permissions
+- Knowledge Base access
+- Demo Viewer access to sample tickets
+- Prevention of access to another user's ticket
+- Turso database connectivity
+- Live deployment on Render
+
+The live demo contains six fictional support tickets for testing and demonstration.
 
 ## Screenshots
 
-Application screenshots are available in the
-[screenshots folder](screenshots/).
+The project includes an interface for:
 
-They demonstrate the following:
-
-- Admin Dashboard
+- Login
+- Service Desk Dashboard
 - Ticket Details
 - User Management
 - Reports and Analytics
-- Login Page
+- Knowledge Base
+- Demo Viewer Dashboard
 
-
+Screenshots can be added to the `screenshots` folder to document these features.
 
 ## Project Status
 
-✅ Core application functionality completed  
-✅ Role-based authentication implemented  
-✅ Ticket creation and assignment tested  
-✅ Technician resolution workflow tested  
-✅ Administrator reports and user management tested  
-✅ Deployed successfully on Render  
-
-**Live Website:** https://ac-techdesk.onrender.com
-
+- Core ticket management features completed
+- User authentication implemented
+- Role-based access control implemented
+- Administrator management features completed
+- Technician support workflow implemented
+- Knowledge Base available
+- Demo Viewer account created
+- Persistent Turso cloud database connected
+- Live application deployed on Render
+- Demo Viewer security checks completed
 
 ## Future Improvements
+
+Potential future improvements include:
 
 - Password reset functionality
 - Email notifications
 - Ticket comments
-- SLA tracking
-- Export reports to CSV
-- Persistent cloud database
-- Additional production security enhancements
-- Automated testing and monitoring
+- Service Level Agreement (SLA) tracking
+- CSV report exports
+- Additional automated tests
+- Application monitoring and logging
+- Further production security improvements
 
 ## Author
 
-Developed as a full-stack Python and IT Support
-portfolio project.
+Developed by Ashish Chauhan as a Python web development and IT Help Desk portfolio project.
+
+The project demonstrates practical skills in IT support workflows, troubleshooting documentation, authentication, database management, and web application development.
 
 ## License
 
-No license has been selected yet.
-```
+No license has been selected for this project.
