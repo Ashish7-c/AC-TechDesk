@@ -5,31 +5,67 @@
 
 {% block content %}
 
-<!-- PAGE HEADING -->
-
+<!-- Dashboard heading -->
 <div class="page-heading">
 
     <div>
         <p class="eyebrow">WORKSPACE / OVERVIEW</p>
-
         <h2>Service Desk Dashboard</h2>
 
-        <p>Monitor and manage IT support requests.</p>
+        {% if current_user.role == "Demo Viewer" %}
+            <p>
+                Explore sample IT support requests
+                in read-only demonstration mode.
+            </p>
+        {% else %}
+            <p>Monitor and manage IT support requests.</p>
+        {% endif %}
     </div>
 
-    <a href="{{ url_for('create_ticket') }}"
-       class="button primary">
-        + Create Ticket
-    </a>
+    <!-- Only regular users can create tickets -->
+    {% if current_user.role in ("Admin", "Technician", "Employee") %}
+
+        <a href="{{ url_for('create_ticket') }}"
+           class="button primary">
+            + Create Ticket
+        </a>
+
+    {% endif %}
 
 </div>
 
 
-<!-- DASHBOARD STATISTICS -->
+<!-- Welcome message for demo users -->
+{% if current_user.role == "Demo Viewer" %}
 
+<section class="panel">
+
+    <h3>Welcome to AC-TechDesk Demo</h3>
+
+    <p>
+        This demonstration shows how AC-TechDesk
+        manages IT support tickets, tracks issues,
+        and records troubleshooting activity.
+    </p>
+
+    <p class="form-help">
+        You can search tickets, filter by status,
+        view ticket details, and explore the
+        Knowledge Base.
+    </p>
+
+    <p class="form-help">
+        This account is read-only. Creating or editing
+        tickets and managing users are disabled.
+    </p>
+
+</section>
+
+{% endif %}
+
+
+<!-- Ticket statistics -->
 <div class="stats-grid">
-
-    <!-- TOTAL TICKETS -->
 
     <div class="stat-card total-card">
         <h3>Total Tickets</h3>
@@ -37,23 +73,17 @@
         <p>All reported incidents</p>
     </div>
 
-    <!-- OPEN TICKETS -->
-
     <div class="stat-card open-card">
         <h3>Open Tickets</h3>
         <h2>{{ open_count }}</h2>
         <p>Awaiting support</p>
     </div>
 
-    <!-- IN PROGRESS -->
-
     <div class="stat-card progress-card">
         <h3>In Progress</h3>
         <h2>{{ progress_count }}</h2>
         <p>Being investigated</p>
     </div>
-
-    <!-- RESOLVED / CLOSED -->
 
     <div class="stat-card resolved-card">
         <h3>Resolved / Closed</h3>
@@ -64,23 +94,34 @@
 </div>
 
 
-<!-- TICKET MANAGEMENT -->
-
+<!-- Ticket list -->
 <section class="panel">
 
     <div class="panel-heading">
 
-        <h3>Support Tickets</h3>
+        {% if current_user.role == "Demo Viewer" %}
 
-        <p>
-            Search, filter, and manage reported IT issues.
-        </p>
+            <h3>Sample Support Tickets</h3>
+
+            <p>
+                Browse sample IT tickets and review
+                their details and activity history.
+            </p>
+
+        {% else %}
+
+            <h3>Support Tickets</h3>
+
+            <p>
+                Search, filter, and manage reported IT issues.
+            </p>
+
+        {% endif %}
 
     </div>
 
 
-    <!-- SEARCH AND FILTER FORM -->
-
+    <!-- Search and filter tickets -->
     <form method="GET"
           action="{{ url_for('home') }}"
           class="filter-form">
@@ -121,14 +162,12 @@
     </form>
 
 
-    <!-- TICKET TABLE -->
-
+    <!-- Display tickets in a table -->
     <div class="table-container">
 
         <table>
 
             <thead>
-
                 <tr>
                     <th>ID</th>
                     <th>Employee</th>
@@ -140,7 +179,6 @@
                     <th>Created</th>
                     <th>Action</th>
                 </tr>
-
             </thead>
 
             <tbody>
@@ -149,85 +187,71 @@
 
                 <tr>
 
-                    <!-- TICKET ID -->
-
                     <td>
                         #{{ ticket.id }}
                     </td>
-
-                    <!-- EMPLOYEE -->
 
                     <td>
                         {{ ticket.employee }}
                     </td>
 
-                    <!-- ISSUE -->
-
                     <td>
                         {{ ticket.subject }}
                     </td>
-
-                    <!-- CATEGORY -->
 
                     <td>
                         {{ ticket.category }}
                     </td>
 
-                    <!-- PRIORITY -->
-
                     <td>
-
                         <span class="priority {{ ticket.priority|lower }}">
                             {{ ticket.priority }}
                         </span>
-
                     </td>
 
-                    <!-- STATUS -->
-
                     <td>
-
                         <span class="status {{ ticket.status|lower|replace(' ', '-') }}">
                             {{ ticket.status }}
                         </span>
-
                     </td>
-
-                    <!-- ASSIGNED TECHNICIAN -->
 
                     <td>
-                        {{ ticket.assigned_to }}
+                        {{ ticket.assigned_to or "Unassigned" }}
                     </td>
-
-                    <!-- CREATION DATE -->
 
                     <td>
                         {{ ticket.created_at }}
                     </td>
 
-                    <!-- VIEW TICKET -->
-
+                    <!-- Open ticket details -->
                     <td>
-
                         <a class="view-link"
                            href="{{ url_for('ticket_detail', ticket_id=ticket.id) }}">
                             View
                         </a>
-
                     </td>
 
                 </tr>
 
                 {% else %}
 
-                <!-- NO TICKETS FOUND -->
-
+                <!-- Message when no tickets are found -->
                 <tr>
-
                     <td colspan="9" class="empty-state">
-                        No tickets found. Create your first support ticket!
-                    </td>
 
+                        {% if current_user.role == "Demo Viewer" %}
+
+                            No matching sample tickets found.
+                            Try another search or filter.
+
+                        {% else %}
+
+                            No tickets found.
+                            Create your first support ticket!
+
+                        {% endif %}
+
+                    </td>
                 </tr>
 
                 {% endfor %}

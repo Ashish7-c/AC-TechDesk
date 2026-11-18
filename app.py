@@ -201,6 +201,23 @@ def role_required(*allowed_roles):
 
     return decorator
 
+# ==========================================
+# DEMO VIEWER - READ ONLY PROTECTION
+# ==========================================
+
+@app.before_request
+def protect_demo_viewer():
+
+    if (
+        current_user.is_authenticated
+        and current_user.role == "Demo Viewer"
+    ):
+        if (
+            request.method not in ("GET", "HEAD", "OPTIONS")
+            and request.endpoint != "logout"
+        ):
+            abort(403)
+
 
 
 # ==========================================
@@ -273,14 +290,17 @@ def initialize_database():
                     name TEXT NOT NULL,
                     email TEXT NOT NULL COLLATE NOCASE UNIQUE,
                     password_hash TEXT NOT NULL,
-                    role TEXT NOT NULL DEFAULT 'Employee'
-                        CHECK (
-                            role IN (
-                                'Admin',
-                                'Technician',
-                                'Employee'
-                            )
-                        ),
+
+                   role TEXT NOT NULL DEFAULT 'Employee'
+                     CHECK (
+                     role IN (
+                              'Admin',
+                             'Technician',
+                              'Employee',
+                                 'Demo Viewer'
+                                   )
+                                   ),
+
                     is_active INTEGER NOT NULL DEFAULT 1,
                     created_at TEXT NOT NULL
                 )
@@ -576,18 +596,20 @@ def home():
     scope = " WHERE 1=1"
     scope_parameters = []
 
+
     if current_user.role == "Technician":
 
         scope += " AND assigned_user_id = ?"
         scope_parameters.append(int(current_user.id))
 
-    elif current_user.role == "Employee":
+    elif current_user.role in ("Employee", "Demo Viewer"):
 
         scope += " AND created_by_user_id = ?"
         scope_parameters.append(int(current_user.id))
 
     elif current_user.role != "Admin":
         abort(403)
+
 
     with closing(get_db()) as db:
 
@@ -660,7 +682,7 @@ def home():
 # ==========================================
 
 @app.route("/create", methods=["GET", "POST"])
-@login_required
+@role_required("Admin", "Technician", "Employee")
 def create_ticket():
 
     if request.method == "POST":
@@ -850,6 +872,9 @@ def ticket_detail(ticket_id):
 
         # Check permission before displaying ticket details
 
+
+        # Check permission before displaying ticket details
+
         if current_user.role == "Admin":
             pass
 
@@ -858,13 +883,14 @@ def ticket_detail(ticket_id):
             if ticket["assigned_user_id"] != int(current_user.id):
                 abort(404)
 
-        elif current_user.role == "Employee":
+        elif current_user.role in ("Employee", "Demo Viewer"):
 
             if ticket["created_by_user_id"] != int(current_user.id):
                 abort(404)
 
         else:
             abort(403)
+
 
         # Admins can choose registered technicians
 

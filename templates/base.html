@@ -12,70 +12,52 @@
         {% block title %}AC-TechDesk{% endblock %}
     </title>
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-    <!-- ==========================================
-         WEBSITE HEADER
-    ========================================== -->
-
+    <!-- Website header -->
     <header>
 
         <h1>AC-TechDesk</h1>
-
         <p>IT Helpdesk Management System</p>
 
     </header>
 
 
-    <!-- ==========================================
-         NAVIGATION BAR
-    ========================================== -->
-
+    <!-- Main navigation -->
     <nav>
 
         {% if current_user.is_authenticated %}
-
-            <!-- DASHBOARD -->
 
             <a href="{{ url_for('home') }}">
                 Dashboard
             </a>
 
 
-            <!-- SUBMIT TICKET -->
+            <!-- Hide ticket creation from demo users -->
+            {% if current_user.role in ("Admin", "Technician", "Employee") %}
 
-            <a href="{{ url_for('create_ticket') }}">
-                Submit Ticket
-            </a>
+                <a href="{{ url_for('create_ticket') }}">
+                    Submit Ticket
+                </a>
 
+            {% endif %}
 
-            <!-- KNOWLEDGE BASE -->
 
             <a href="{{ url_for('knowledge_base') }}">
                 Knowledge Base
             </a>
 
 
-            <!-- ==================================
-                 ADMIN ONLY NAVIGATION
-            ================================== -->
-
+            <!-- Admin pages -->
             {% if current_user.role == "Admin" %}
-
-                <!-- MANAGE USERS -->
 
                 <a href="{{ url_for('admin_users') }}">
                     Manage Users
                 </a>
-
-
-                <!-- REPORTS AND ANALYTICS -->
 
                 <a href="{{ url_for('admin_reports') }}">
                     Reports
@@ -84,16 +66,9 @@
             {% endif %}
 
 
-            <!-- ==================================
-                 LOGOUT
-            ================================== -->
-
-            <form
-                method="POST"
-                action="{{ url_for('logout') }}"
-            >
-
-                <!-- CSRF PROTECTION -->
+            <!-- Logout button -->
+            <form method="POST"
+                  action="{{ url_for('logout') }}">
 
                 <input
                     type="hidden"
@@ -101,19 +76,14 @@
                     value="{{ csrf_token() }}"
                 >
 
-                <button
-                    type="submit"
-                    class="button secondary"
-                >
+                <button type="submit"
+                        class="button secondary">
                     Logout
                 </button>
 
             </form>
 
-
         {% else %}
-
-            <!-- LOGIN -->
 
             <a href="{{ url_for('login') }}">
                 Login
@@ -124,14 +94,10 @@
     </nav>
 
 
-    <!-- ==========================================
-         MAIN CONTENT
-    ========================================== -->
-
+    <!-- Main page content -->
     <main>
 
-        <!-- FLASH MESSAGES -->
-
+        <!-- Show messages after an action -->
         {% with messages = get_flashed_messages() %}
 
             {% if messages %}
@@ -149,18 +115,14 @@
         {% endwith %}
 
 
-        <!-- PAGE CONTENT -->
-
+        <!-- Content from other pages -->
         {% block content %}
         {% endblock %}
 
     </main>
 
 
-    <!-- ==========================================
-         FOOTER
-    ========================================== -->
-
+    <!-- Footer -->
     <footer>
 
         AC-TechDesk &copy; 2026 | IT Support Management

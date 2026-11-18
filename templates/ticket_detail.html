@@ -13,9 +13,7 @@
 
     <div>
         <p class="eyebrow">SUPPORT / TICKET DETAILS</p>
-
         <h2>Ticket #{{ ticket.id }}</h2>
-
         <p>Review this IT support request.</p>
     </div>
 
@@ -25,6 +23,35 @@
     </a>
 
 </div>
+
+
+<!-- ==========================================
+     DEMO VIEWER - READ ONLY NOTICE
+========================================== -->
+
+{% if current_user.role == "Demo Viewer" %}
+
+<section class="panel">
+
+    <h3>Read-Only Demo Mode</h3>
+
+    <p>
+        Welcome to the AC-TechDesk demonstration.
+        You can explore sample support tickets,
+        review troubleshooting information,
+        and view ticket activity history.
+    </p>
+
+    <p class="form-help">
+        This is a read-only demonstration.
+        Ticket creation, editing, technician
+        assignment, and administrative actions
+        are disabled for this account.
+    </p>
+
+</section>
+
+{% endif %}
 
 
 <!-- ==========================================
@@ -133,10 +160,47 @@
 
 
 <!-- ==========================================
+     READ-ONLY RESOLUTION NOTES
+========================================== -->
+
+{% if current_user.role in ("Employee", "Demo Viewer") %}
+
+<section class="panel">
+
+    <h3>Resolution Notes</h3>
+
+    <p class="form-help">
+        View the troubleshooting steps and
+        resolution information for this ticket.
+    </p>
+
+    <div class="description-box">
+
+        {% if ticket.resolution_notes %}
+
+            <p>{{ ticket.resolution_notes }}</p>
+
+        {% else %}
+
+            <p>
+                No resolution notes have been
+                recorded for this ticket yet.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+<!-- ==========================================
      ADMIN AND TECHNICIAN UPDATE FORM
 ========================================== -->
 
-{% if current_user.role in ["Admin", "Technician"] %}
+{% if current_user.role in ("Admin", "Technician") %}
 
 <section class="panel form-panel">
 
