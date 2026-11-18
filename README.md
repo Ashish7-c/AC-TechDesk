@@ -1,4 +1,25 @@
 
+## Live Application
+
+🌐 **Live Demo:** https://ac-techdesk.onrender.com
+
+AC-TechDesk is a Flask-based IT Help Desk application
+deployed on Render.
+
+### Features
+- Role-based access: Admin, Technician, Employee
+- Support ticket creation and management
+- Technician ticket assignment
+- Ticket status tracking and resolution
+- User account management
+- Ticket activity history
+- Reports and analytics
+- IT troubleshooting knowledge base
+
+**Note:** This is a portfolio demonstration.
+It uses temporary SQLite storage on Render Free.
+Demo data may reset when the service restarts.
+
 # AC-TechDesk
 ### IT Helpdesk Management System
 
