@@ -136,15 +136,16 @@ python create_admin.py
 
 Follow the script's instructions to create the Admin account.
 
-### 7. Start the application
+### 7. Run Locally (Optional)
 
-```bash
+Start the Flask development server:
+
 python app.py
-```
 
-Open:
+Open http://127.0.0.1:5000 in your browser.
 
-http://127.0.0.1:5000
+For the publicly hosted application, visit:
+https://ac-techdesk.onrender.com
 
 ## User Roles
 
