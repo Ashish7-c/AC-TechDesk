@@ -105,14 +105,34 @@ DEPARTMENTS = [
 ]
 
 
-# ==========================================
-# 3. DATABASE CONNECTION
-# ==========================================
 
 def get_db():
 
-    db = sqlite3.connect(DATABASE)
+    # Check whether cloud database settings are available
+    turso_url = os.environ.get("TURSO_DATABASE_URL", "").strip()
+    turso_token = os.environ.get("TURSO_AUTH_TOKEN", "").strip()
 
+    # Use Turso when cloud credentials are configured
+    if turso_url or turso_token:
+
+        if not turso_url or not turso_token:
+            raise RuntimeError(
+                "Both TURSO_DATABASE_URL and "
+                "TURSO_AUTH_TOKEN are required."
+            )
+
+        import libsql
+        from turso_adapter import TursoConnection
+
+        connection = libsql.connect(
+            database=turso_url,
+            auth_token=turso_token
+        )
+
+        return TursoConnection(connection)
+
+    # Otherwise, use the local SQLite database
+    db = sqlite3.connect(DATABASE)
     db.row_factory = sqlite3.Row
 
     return db
@@ -539,12 +559,6 @@ def toggle_user_active(user_id):
         flash("User account deactivated successfully!")
 
     return redirect(url_for("admin_users"))
-
-
-
-# ==========================================
-# 9. DASHBOARD
-# ==========================================
 
 
 # ==========================================
