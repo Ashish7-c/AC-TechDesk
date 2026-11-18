@@ -91,7 +91,7 @@ to troubleshoot and resolve issues.
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/AC-TechDesk.git
+git clone https://github.com/Ashish7-c/AC-TechDesk.git
 cd AC-TechDesk
 ```
 
@@ -136,16 +136,21 @@ python create_admin.py
 
 Follow the script's instructions to create the Admin account.
 
+
 ### 7. Run Locally (Optional)
 
 Start the Flask development server:
 
+```bash
 python app.py
+```
 
 Open http://127.0.0.1:5000 in your browser.
 
 For the publicly hosted application, visit:
+
 https://ac-techdesk.onrender.com
+
 
 ## User Roles
 
@@ -176,15 +181,20 @@ and portfolio demonstration.
 Additional security review and production configuration
 are required before using real organizational data.
 
+
 ## Screenshots
 
-Screenshots of the following pages will be added:
+Application screenshots are available in the
+[screenshots folder](screenshots/).
+
+They demonstrate the following:
 
 - Admin Dashboard
 - Ticket Details
 - User Management
 - Reports and Analytics
 - Login Page
+
 
 
 ## Project Status
@@ -206,7 +216,9 @@ Screenshots of the following pages will be added:
 - Ticket comments
 - SLA tracking
 - Export reports to CSV
-- Secure cloud deployment
+- Persistent cloud database
+- Additional production security enhancements
+- Automated testing and monitoring
 
 ## Author
 
