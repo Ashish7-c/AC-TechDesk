@@ -1,35 +1,26 @@
 
-## Live Application
-
-🌐 **Live Demo:** https://ac-techdesk.onrender.com
-
-AC-TechDesk is a Flask-based IT Help Desk application
-deployed on Render.
-
-### Features
-- Role-based access: Admin, Technician, Employee
-- Support ticket creation and management
-- Technician ticket assignment
-- Ticket status tracking and resolution
-- User account management
-- Ticket activity history
-- Reports and analytics
-- IT troubleshooting knowledge base
-
-**Note:** This is a portfolio demonstration.
-It uses temporary SQLite storage on Render Free.
-Demo data may reset when the service restarts.
-
-# AC-TechDesk
-### IT Helpdesk Management System
+# AC-TechDesk — IT Help Desk Management System
 
 AC-TechDesk is a full-stack IT support ticket management
-application developed using Python, Flask, SQLite,
-HTML, and CSS.
+application developed using Python, Flask, SQLite, HTML,
+and CSS.
 
-The application helps organizations manage IT support
-requests, track ticket progress, assign technicians,
-and monitor support performance.
+The application allows employees to submit IT support
+requests, administrators to assign tickets, and technicians
+to troubleshoot and resolve issues.
+
+## 🌐 Live Application
+
+**Live Demo:** https://ac-techdesk.onrender.com
+
+**Source Code:** https://github.com/Ashish7-c/AC-TechDesk
+
+**Deployment:** Render (Python, Flask, Gunicorn)
+
+> **Note:** This is a portfolio demonstration.
+> It uses temporary SQLite storage on Render Free.
+> Test accounts and tickets may reset after a service
+> restart or redeployment.
 
 ## Features
 
@@ -194,12 +185,18 @@ Screenshots of the following pages will be added:
 - Reports and Analytics
 - Login Page
 
+
 ## Project Status
 
-Core functionality has been implemented.
+✅ Core application functionality completed  
+✅ Role-based authentication implemented  
+✅ Ticket creation and assignment tested  
+✅ Technician resolution workflow tested  
+✅ Administrator reports and user management tested  
+✅ Deployed successfully on Render  
 
-Final testing, documentation, and deployment preparation
-are in progress.
+**Live Website:** https://ac-techdesk.onrender.com
+
 
 ## Future Improvements
 
