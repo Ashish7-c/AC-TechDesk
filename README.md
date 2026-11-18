@@ -293,17 +293,37 @@ The following features were manually tested:
 
 The live demo contains six fictional support tickets for testing and demonstration.
 
+
 ## Screenshots
 
-The project includes an interface for:
+### Service Desk Dashboard
 
-- Login
-- Service Desk Dashboard
-- Ticket Details
-- User Management
-- Reports and Analytics
-- Knowledge Base
-- Demo Viewer Dashboard
+![Service Desk Dashboard](screenshots/dashboard.png)
+
+### Demo Viewer Dashboard
+
+![Read-Only Demo Dashboard](screenshots/demo-dashboard.png)
+
+### Login Page
+
+![AC-TechDesk Login](screenshots/login.png)
+
+### Ticket Details
+
+![Ticket Details](screenshots/ticket-details.png)
+
+### Admin Reports
+
+![Reports and Analytics](screenshots/reports.png)
+
+
+### User Management
+
+The administrator can manage employee and technician accounts, assign user roles, and activate or deactivate accounts.
+
+![AC-TechDesk User Management](screenshots/user-management.png)
+
+
 
 Screenshots can be added to the `screenshots` folder to document these features.
 
