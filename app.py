@@ -106,39 +106,35 @@ DEPARTMENTS = [
 
 
 
+
 def get_db():
+    turso_url = os.environ.get(
+        "TURSO_DATABASE_URL", ""
+    ).strip()
 
-    # Check whether cloud database settings are available
-    turso_url = os.environ.get("TURSO_DATABASE_URL", "").strip()
-    turso_token = os.environ.get("TURSO_AUTH_TOKEN", "").strip()
+    turso_token = os.environ.get(
+        "TURSO_AUTH_TOKEN", ""
+    ).strip()
 
-    # Use Turso when cloud credentials are configured
     if turso_url or turso_token:
-
         if not turso_url or not turso_token:
             raise RuntimeError(
                 "Both TURSO_DATABASE_URL and "
                 "TURSO_AUTH_TOKEN are required."
             )
 
-        import libsql
         from turso_adapter import TursoConnection
 
-        connection = libsql.connect(
-            database=turso_url,
-            auth_token=turso_token
+        return TursoConnection(
+            turso_url,
+            turso_token
         )
 
-        return TursoConnection(connection)
-
-    # Otherwise, use the local SQLite database
+    # Local SQLite fallback
     db = sqlite3.connect(DATABASE)
     db.row_factory = sqlite3.Row
-
     return db
 
-
-# ==========================================
 # 4. USER MODEL
 # ==========================================
 
