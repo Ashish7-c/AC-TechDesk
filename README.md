@@ -1,14 +1,26 @@
 
-# AC-TechDesk
-### IT Helpdesk Management System
+# AC-TechDesk — IT Help Desk Management System
 
 AC-TechDesk is a full-stack IT support ticket management
-application developed using Python, Flask, SQLite,
-HTML, and CSS.
+application developed using Python, Flask, SQLite, HTML,
+and CSS.
 
-The application helps organizations manage IT support
-requests, track ticket progress, assign technicians,
-and monitor support performance.
+The application allows employees to submit IT support
+requests, administrators to assign tickets, and technicians
+to troubleshoot and resolve issues.
+
+## 🌐 Live Application
+
+**Live Demo:** https://ac-techdesk.onrender.com
+
+**Source Code:** https://github.com/Ashish7-c/AC-TechDesk
+
+**Deployment:** Render (Python, Flask, Gunicorn)
+
+> **Note:** This is a portfolio demonstration.
+> It uses temporary SQLite storage on Render Free.
+> Test accounts and tickets may reset after a service
+> restart or redeployment.
 
 ## Features
 
@@ -79,7 +91,7 @@ and monitor support performance.
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/AC-TechDesk.git
+git clone https://github.com/Ashish7-c/AC-TechDesk.git
 cd AC-TechDesk
 ```
 
@@ -124,15 +136,21 @@ python create_admin.py
 
 Follow the script's instructions to create the Admin account.
 
-### 7. Start the application
+
+### 7. Run Locally (Optional)
+
+Start the Flask development server:
 
 ```bash
 python app.py
 ```
 
-Open:
+Open http://127.0.0.1:5000 in your browser.
 
-http://127.0.0.1:5000
+For the publicly hosted application, visit:
+
+https://ac-techdesk.onrender.com
+
 
 ## User Roles
 
@@ -163,9 +181,13 @@ and portfolio demonstration.
 Additional security review and production configuration
 are required before using real organizational data.
 
+
 ## Screenshots
 
-Screenshots of the following pages will be added:
+Application screenshots are available in the
+[screenshots folder](screenshots/).
+
+They demonstrate the following:
 
 - Admin Dashboard
 - Ticket Details
@@ -173,12 +195,19 @@ Screenshots of the following pages will be added:
 - Reports and Analytics
 - Login Page
 
+
+
 ## Project Status
 
-Core functionality has been implemented.
+✅ Core application functionality completed  
+✅ Role-based authentication implemented  
+✅ Ticket creation and assignment tested  
+✅ Technician resolution workflow tested  
+✅ Administrator reports and user management tested  
+✅ Deployed successfully on Render  
 
-Final testing, documentation, and deployment preparation
-are in progress.
+**Live Website:** https://ac-techdesk.onrender.com
+
 
 ## Future Improvements
 
@@ -187,7 +216,9 @@ are in progress.
 - Ticket comments
 - SLA tracking
 - Export reports to CSV
-- Secure cloud deployment
+- Persistent cloud database
+- Additional production security enhancements
+- Automated testing and monitoring
 
 ## Author
 
