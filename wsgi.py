@@ -11,6 +11,15 @@ if not os.environ.get("SECRET_KEY"):
 
 from app import app, get_db, initialize_database
 
+from contextlib import closing
+
+with closing(get_db()) as connection:
+    print(
+        "AC-TechDesk database backend:",
+        type(connection).__name__,
+        flush=True
+    )
+
 # Initialize database tables
 initialize_database()
 
